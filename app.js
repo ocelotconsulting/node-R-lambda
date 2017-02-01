@@ -13,7 +13,8 @@ const spawnPromise = (child) => {
 }
 
 const spawnR = () => {
-  const whereWeR = `${process.env['LAMBDA_TASK_ROOT'] || process.env['PWD']}/lib/portableR`
+  const pwd = `${process.env['LAMBDA_TASK_ROOT'] || process.env['PWD']}`
+  const whereWeR = `${pwd}/lib/portableR`
   process.env['LD_LIBRARY_PATH'] = `${whereWeR}/lib`
   process.env['R_HOME'] = `${whereWeR}/`
   process.env['R_HOME_DIR'] = `${whereWeR}/`
@@ -23,7 +24,7 @@ const spawnR = () => {
     './lib/portableR/R',
     [
       '--no-restore',
-      `--file=${process.env['PWD']}/hello_world.r`,
+      `--file=${pwd}/hello_world.r`,
       '--slave'
     ])
 }
