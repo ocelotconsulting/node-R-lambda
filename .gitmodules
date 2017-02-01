@@ -1,0 +1,3 @@
+[submodule "lib/portableR"]
+	path = lib/portableR
+	url = https://github.com/nafiux/portableR

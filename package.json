@@ -1,0 +1,41 @@
+{
+  "name": "node-R-lambda",
+  "version": "1.0.0",
+  "description": "Nodejs-based R script runner.",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ocelotconsulting/node-R-lambda.git"
+  },
+  "scripts": {
+    "clean": "rm dist*.zip || true && rm -rf build",
+    "dist": "mkdir build && npm install && npm prune --production && mv node_modules ./build && npm install && node zip.js",
+    "pems": "node bin/write_pems.js",
+    "local-cert": "node bin/local.js",
+    "test": "node -e \"function noop(){}\"",
+    "deploy": ". ./deploy.sh"
+  },
+  "keywords": [
+    "R",
+    "nodejs",
+    "aws"
+  ],
+  "author": "Larry Anderson",
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "^2.9.0",
+    "superagent": "^3.4.1"
+  },
+  "devDependencies": {
+    "archiver": "^1.3.0",
+    "aws-sdk-cli": "0.0.3",
+    "eslint": "^3.14.1",
+    "eslint-config": "^0.3.0",
+    "eslint-config-standard": "^6.2.1",
+    "eslint-plugin-promise": "^3.4.0",
+    "eslint-plugin-standard": "^2.0.1"
+  },
+  "engines": {
+    "npm": "4.3.2"
+  }
+}
