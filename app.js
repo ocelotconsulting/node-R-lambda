@@ -1,16 +1,16 @@
 const config = require('./config/default.json')
 const spawn = require('child_process').spawn
+const MemoryWritable = require('./src/MemoryWritable')
 
-const echoData = (data) => {
-  console.log(`stdout: ${data}`)
-}
+const spawnPromise = (child) => {
+  const output = new MemoryWritable()
 
-const spawnPromise = (child) =>
-  new Promise((resolve, reject) => {
+  child.stdout.pipe(output)
+  return new Promise((resolve, reject) => {
     child.addListener('error', reject)
     child.addListener('close', resolve)
-    child.stdout.on('data', echoData)
-  })
+  }).then(() => output.toString())
+}
 
 const spawnR = () => {
   const whereWeR = `${process.env['LAMBDA_TASK_ROOT'] || process.env['PWD']}/lib/portableR`
@@ -23,7 +23,8 @@ const spawnR = () => {
     './lib/portableR/R',
     [
       '--no-restore',
-      `--file=${process.env['PWD']}/hello_world.r`
+      `--file=${process.env['PWD']}/hello_world.r`,
+      '--slave'
     ])
 }
 
